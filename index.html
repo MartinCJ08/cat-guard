@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Miptosis</title>
+  <style>
+    @import url("https://fonts.googleapis.com/css?family=Monsieur+La+Doulaise&display=swap");
+
+    .container {
+      grid-template-rows: [row1-start] 25% [row1-end row2-start] 25% [row2-end];
+    }
+
+    .row {
+      display: block;
+    }
+
+    h1 {
+      font-size: calc(10px + 18vh);
+      line-height: calc(10px + 20vh);
+      /* text-shadow: 0 0 5px #f562ff, 0 0 15px #f562ff, 0 0 25px #f562ff,
+         0 0 20px #f562ff, 0 0 30px #890092, 0 0 80px #890092, 0 0 80px #890092;
+         color: #fccaff; */
+      text-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500, 0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
+      color: #fff6a9;
+      font-family: "Monsieur La Doulaise", cursive;
+      text-align: center;
+      animation: blink 12s infinite;
+      -webkit-animation: blink 12s infinite;
+    }
+
+    img {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 300px;
+      height: auto;    
+      transform: scaleY(-1);
+      box-shadow: 0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500, 0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000;
+      animation: blink 12s infinite;
+      -webkit-animation: blink 12s infinite;
+    }
+    
+    body {
+      background: #1d1f20;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row"><h1>Guardia D</h1></div>
+    <div id="myCatImg" class="row"></div>
+  </div>
+
+  <script>
+    //change the limit to however many images to use
+    const url = `https://api.thecatapi.com/v1/images/search?limit=1`;
+    const api_key = "DEMO-API"
+
+    fetch(url, {
+      headers: {
+        'x-api-key': api_key
+      }
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        let imagesData = data;
+        imagesData.map(function (imageData) {
+
+          let image = document.createElement('img');
+          //use the url from the image object
+          image.src = `${imageData.url}`;
+
+          let gridCell = document.createElement('div');
+          // gridCell.classList.add('row');
+          // gridCell.classList.add('col-lg');
+          gridCell.appendChild(image)
+
+          document.getElementById('myCatImg').appendChild(gridCell);
+
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  </script>
+</body>
+
+</html>
